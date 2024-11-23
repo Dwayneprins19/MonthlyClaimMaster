@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model MonthlyClaimMaster.Models.Claim
+
+<form asp-action="Submit" method="post" enctype="multipart/form-data">
+    <div>
+        <label>Hours Worked:</label>
+        <input type="number" asp-for="HoursWorked" id="hoursWorked" />
+    </div>
+    <div>
+        <label>Hourly Rate:</label>
+        <input type="number" asp-for="HourlyRate" id="hourlyRate" />
+    </div>
+    <div>
+        <label>Total Payment:</label>
+        <input type="text" asp-for="TotalPayment" id="totalPayment" readonly />
+    </div>
+    <div>
+        <label>Notes:</label>
+        <textarea asp-for="Notes"></textarea>
+    </div>
+    <div> 
+        <label>Upload Supporting Document:</label>
+        <input type="file" asp-for="SupportingDocument" /> 
+    </div>
+    <button type="submit">Submit Claim</button>
+</form>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#hoursWorked, #hourlyRate').on('input', function() {
+                var hoursWorked = parseFloat($('#hoursWorked').val()) || 0;
+                var hourlyRate = parseFloat($('#hourlyRate').val()) || 0;
+                var totalPayment = hoursWorked * hourlyRate;
+                $('#totalPayment').val(totalPayment.toFixed(2));
+            });
+        });
+    </script>
+}
